@@ -32,45 +32,32 @@
  *
  */
 
-/**
- * Функція ілюструє порядок виконання асинхронних операцій у Node.js.
- * * @param {Function} callback - Функція, що викликається після кожної операції.
- */
+
 function asyncOperationDemo(callback) {
-  // 1. Початок виконання функції (Синхронно)
   console.log('Перший виклик');
 
-  // 2. Планування setTimeout (Фаза Timers)
-  // Виконується після завершення поточної ітерації циклу та перевірки таймерів.
   setTimeout(() => {
     console.log('Виконано setTimeout');
     callback('setTimeout');
     console.log('Завершено виконання: setTimeout');
   }, 0);
 
-  // 3. Планування setImmediate (Фаза Check)
-  // Виконується на наступній фазі 'check' після фази опитування (poll).
   setImmediate(() => {
     console.log('Виконано setImmediate');
     callback('setImmediate');
     console.log('Завершено виконання: setImmediate');
   });
 
-  // 4. Планування process.nextTick (Microtask Queue)
-  // Має найвищий пріоритет — виконується відразу після завершення поточного блоку коду, 
-  // до переходу до будь-якої фази циклу подій.
   process.nextTick(() => {
     console.log('Виконано nextTick');
     callback('nextTick');
     console.log('Завершено виконання: nextTick');
   });
 
-  // 5. Кінець синхронного блоку
   console.log('Останній виклик');
 }
 
-// Приклад використання:
+
 asyncOperationDemo((operation) => {
-  // Цей лог вже ініційований всередині функцій зворотнього виклику згідно з ТЗ
 });
 export { asyncOperationDemo }
